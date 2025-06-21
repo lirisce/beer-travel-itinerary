@@ -24,5 +24,7 @@ services:
       - POSTGRES_USER=beer-user
       - POSTGRES_PASSWORD=beer-password
       - POSTGRES_DB=beerdb
+    volumes:
+      - ./dataset:/docker-entrypoint-initdb.d
     ports:
       - "5433:5432"
