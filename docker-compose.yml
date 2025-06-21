@@ -1,0 +1,28 @@
+services:
+  app:
+    image: 'docker-spring-boot-postgres:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_USER=beer-user
+      - POSTGRES_PASSWORD=beer-password
+      - POSTGRES_DB=beerdb
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/beerdb
+      - SPRING_DATASOURCE_USERNAME=beer-user
+      - SPRING_DATASOURCE_PASSWORD=beer-password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "6868:8080"
+
+  db:
+    image: 'postgres:17.5'
+    container_name: db
+    environment:
+      - POSTGRES_USER=beer-user
+      - POSTGRES_PASSWORD=beer-password
+      - POSTGRES_DB=beerdb
+    ports:
+      - "5433:5432"
