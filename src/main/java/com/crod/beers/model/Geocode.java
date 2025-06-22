@@ -19,10 +19,10 @@ public class Geocode {
   @JoinColumn(name = "brewery_id", referencedColumnName = "id")
   private Brewery brewery;
 
-  @Column(name = "latitude", precision = 17, scale = 15)
+  @Column(name = "latitude", precision = 17, scale = 15, nullable = false)
   private BigDecimal latitude;
 
-  @Column(name = "longitude", precision = 18, scale = 15)
+  @Column(name = "longitude", precision = 18, scale = 15, nullable = false)
   private BigDecimal longitude;
 
   @Column(name = "accuracy")

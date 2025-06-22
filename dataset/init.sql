@@ -40,8 +40,8 @@ CREATE TABLE category (
 CREATE TABLE geocode (
     id integer NOT NULL PRIMARY KEY,
     accuracy character varying(255),
-    latitude NUMERIC(17,15),
-    longitude NUMERIC(18,15),
+    latitude NUMERIC(17,15) NOT NULL,
+    longitude NUMERIC(18,15) NOT NULL,
     brewery_id integer
 );
 

@@ -76,7 +76,8 @@ public class BasicSearchServiceTest {
     assertEquals(2, result.itineraryNodes().get(1).getBreweryId());
     assertEquals(1, result.itineraryNodes().get(2).getBreweryId());
     assertNull(result.itineraryNodes().get(3).getBreweryId());
-    assertTrue(Math.abs(1200 - result.totalKms().doubleValue()) < 1);
+    // 400 + 801 + 401
+    assertTrue(Math.abs(1602 - result.totalKms().doubleValue()) < 1);
   }
 
   private Geocode createGeocode(int id, String latitude, String longitude) {

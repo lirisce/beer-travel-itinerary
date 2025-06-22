@@ -56,8 +56,8 @@ public class BasicSearchService extends AbstractSearchService implements SearchS
 
     // Search complete. We just need to manually add the origin as a final step.
     if (visitedNodes.size() > 1) {
-      SearchNode backToOriginNode = new SearchNode(null, null, origin,
-          visitedNodes.getLast().getDistanceFromOrigin());
+      SearchNode backToOriginNode = new SearchNode(null, null, origin, 0);
+      backToOriginNode.setDistanceFromPreviousNode(visitedNodes.getLast().getDistanceFromOrigin());
       visitedNodes.add(backToOriginNode);
     }
 

@@ -6,11 +6,16 @@
 </head>
 <body>
 <p><b>Starting point</b></p>
-<form method="post">
-  <label for="lat">Latitude:</label><br>
-  <input type="text" id="lat" name="lat" th:value="${latValue} ?: 51.742503"><br>
-  <label for="long">Longitude:</label><br>
-  <input type="text" id="long" name="long" th:value="${longValue} ?: 19.432956">
+<form method="post" th:object="${searchForm}">
+  <label for="latitude">Latitude:</label><br>
+  <input type="text" id="latitude" th:field="*{latitude}"><br>
+  <div th:if="${#fields.hasErrors('latitude')}" style="color: red;">Invalid latitude</div>
+
+  <label for="longitude">Longitude:</label><br>
+  <input type="text" id="longitude" th:field="*{longitude}"><br>
+  <div th:if="${#fields.hasErrors('longitude')}" style="color: red;">Invalid longitude</div>
+
+  <br>
   <input type="submit" value="Search v1" formaction="/searchBasic">
   <input type="submit" value="Search v2" formaction="/searchByRP">
 </form>
