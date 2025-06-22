@@ -11,14 +11,15 @@
   <input type="text" id="lat" name="lat" th:value="${latValue} ?: 51.742503"><br>
   <label for="long">Longitude:</label><br>
   <input type="text" id="long" name="long" th:value="${longValue} ?: 19.432956">
-  <input type="submit" value="Search" formaction="/search">
+  <input type="submit" value="Search v1" formaction="/searchBasic">
+  <input type="submit" value="Search v2" formaction="/searchByRP">
 </form>
 
 <div th:if="${searchResult}">
-  <div th:if="${searchResult.itineraryNodes.size() < 3}">
+  <div th:if="${searchResult.itineraryNodes.size() < 2}">
     <p><b>No results found.</b></p>
   </div>
-  <div th:unless="${searchResult.itineraryNodes.size() < 3}">
+  <div th:unless="${searchResult.itineraryNodes.size() < 2}">
     <p><b>Suggested itinerary</b></p>
     <ol>
       <li th:each="brewery : ${searchResult.itineraryNodes}">

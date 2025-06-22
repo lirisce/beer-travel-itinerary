@@ -3,7 +3,8 @@ package com.crod.beers.controller;
 import com.crod.beers.constants.Constants.Views;
 import com.crod.beers.data.Coordinate;
 import com.crod.beers.data.SearchResult;
-import com.crod.beers.service.SearchService;
+import com.crod.beers.service.impl.BasicSearchService;
+import com.crod.beers.service.impl.SearchByRelativeProximityService;
 import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.Duration;
@@ -18,26 +19,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomepageController {
 
-  private final SearchService searchService;
+  private final SearchByRelativeProximityService searchByRelativeProximityService;
+  private final BasicSearchService basicSearchService;
   private final Clock clock;
 
   @Autowired
-  public HomepageController(SearchService searchService, Clock clock) {
-    this.searchService = searchService;
+  public HomepageController(SearchByRelativeProximityService searchByRelativeProximityService,
+      BasicSearchService basicSearchService, Clock clock) {
+    this.searchByRelativeProximityService = searchByRelativeProximityService;
+    this.basicSearchService = basicSearchService;
     this.clock = clock;
   }
 
-  @GetMapping(value = "/")
+  @GetMapping
   public String get() {
     return Views.INDEX;
   }
 
-  @PostMapping(value = "/search")
-  public String search(@RequestParam(name = "lat") String latitude,
+  @PostMapping(value = "/searchBasic")
+  public String basicSearch(@RequestParam(name = "lat") String latitude,
       @RequestParam(name = "long") String longitude,
       Model model) {
     Instant startInstant = clock.instant();
-    SearchResult searchResult = searchService.findBestItinerary(
+    SearchResult searchResult = basicSearchService.findBestItinerary(
+        new Coordinate(new BigDecimal(latitude), new BigDecimal(longitude)));
+
+    model.addAttribute("searchResult", searchResult);
+    model.addAttribute("elapsedTimeMs", Duration.between(startInstant, clock.instant()).toMillis());
+    model.addAttribute("latValue", latitude);
+    model.addAttribute("longValue", longitude);
+
+    return Views.INDEX;
+  }
+
+  @PostMapping(value = "/searchByRP")
+  public String searchByRelativeProximity(@RequestParam(name = "lat") String latitude,
+      @RequestParam(name = "long") String longitude,
+      Model model) {
+    Instant startInstant = clock.instant();
+    SearchResult searchResult = searchByRelativeProximityService.findBestItinerary(
         new Coordinate(new BigDecimal(latitude), new BigDecimal(longitude)));
 
     model.addAttribute("searchResult", searchResult);

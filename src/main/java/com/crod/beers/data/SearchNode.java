@@ -2,11 +2,11 @@ package com.crod.beers.data;
 
 public class SearchNode implements Cloneable {
 
-  public Integer breweryId;
-  public String breweryName;
-  public Coordinate coordinate;
-  public double distanceFromPreviousNode;
-  public double distanceFromOrigin;
+  private Integer breweryId;
+  private String breweryName;
+  private Coordinate coordinate;
+  private double distanceFromPreviousNode;
+  private double distanceFromOrigin;
 
   public SearchNode(Integer breweryId, String breweryName, Coordinate coordinate,
       double distanceFromOrigin) {
@@ -61,7 +61,7 @@ public class SearchNode implements Cloneable {
     return (breweryId != null ? "[" + breweryId + "] " + breweryName : "HOME") + ": "
         + (coordinate != null ? "{" + coordinate.latitude() + "," + coordinate.longitude() + "}"
         : "")
-        + ", distance: " + distanceFromPreviousNode + " km";
+        + ", distance: " + String.format("%.2f", distanceFromPreviousNode) + " km";
   }
 
   @Override

@@ -1,7 +1,9 @@
 package com.crod.beers.service.impl;
 
 import com.crod.beers.data.Coordinate;
+import com.crod.beers.data.SearchNode;
 import com.crod.beers.service.DistanceCalculatorService;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,5 +34,24 @@ public class HaversineDistanceCalculatorService implements DistanceCalculatorSer
 
   private double haversine(double value) {
     return Math.pow(Math.sin(value / 2), 2);
+  }
+
+  @Override
+  public double[][] distanceMatrix(List<SearchNode> nodes) {
+    double[][] matrix = new double[nodes.size()][nodes.size()];
+
+    for (int row = 0; row < nodes.size(); row++) {
+      for (int column = 0; column < nodes.size(); column++) {
+        if (row != column) {
+          Coordinate from = nodes.get(row).getCoordinate();
+          Coordinate to = nodes.get(column).getCoordinate();
+          double distance = distanceBetweenCoordinates(from, to);
+          matrix[row][column] = distance;
+          matrix[column][row] = distance;
+        }
+      }
+    }
+
+    return matrix;
   }
 }
