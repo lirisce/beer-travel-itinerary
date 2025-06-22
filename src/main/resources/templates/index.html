@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Beer Travel Itinerary</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<p><b>Starting point</b></p>
+<form method="post">
+  <label for="lat">Latitude:</label><br>
+  <input type="text" id="lat" name="lat" th:value="${latValue} ?: 51.742503"><br>
+  <label for="long">Longitude:</label><br>
+  <input type="text" id="long" name="long" th:value="${longValue} ?: 19.432956">
+  <input type="submit" value="Search" formaction="/search">
+</form>
+
+<div th:if="${searchResult}">
+  <div th:if="${searchResult.itineraryNodes.size() < 3}">
+    <p><b>No results found.</b></p>
+  </div>
+  <div th:unless="${searchResult.itineraryNodes.size() < 3}">
+    <p><b>Suggested itinerary</b></p>
+    <ol>
+      <li th:each="brewery : ${searchResult.itineraryNodes}">
+        <span th:text="${brewery}"></span>
+      </li>
+    </ol>
+    <p><b>Total distance:</b> <span th:text="${searchResult.totalKms}"></span> km</p>
+    <p><b>Beers collected</b></p>
+    <ol>
+      <li th:each="beer : ${searchResult.beersCollected}">
+        <span th:text="${beer}"></span>
+      </li>
+    </ol>
+  </div>
+  <p><b>Elapsed time:</b> <span th:text="${elapsedTimeMs}"></span> ms</p>
+</div>
+
+</body>
+</html>
