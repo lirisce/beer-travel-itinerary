@@ -11,7 +11,7 @@ Docker and Docker Compose for easy setup and deployment. Dependencies are handle
 To build and start the application and its dependencies, simply run:
 
 ```bash
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Accessing the application
@@ -25,5 +25,5 @@ From there, input a latitude and longitude (default values are provided as an ex
 To stop the application and remove the containers:
 
 ```bash
-docker-compose down
+docker compose down
 ```
